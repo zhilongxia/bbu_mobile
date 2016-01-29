@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.buybuyup.api.mapper.ProductXtzgMapper">
+
+	<select id="getProductCommonByParam" parameterType="java.util.Map" resultType="java.util.Map">
+	 	 select t.* from (
+	 	     SELECT main.id  id,	
+	 	            IFNULL(main.RAISE_RATE, 0 ) AS finishRate,
+					trust.INVEST_TERM investTerm,
+					trust.SUBSCRIBE subscribe,
+					trust.YEAR_INCOME yearIncome,
+					(SELECT CODE_NAME FROM directionary_code_item c1 WHERE c1.ID=trust.INVEST_FIELD) AS investFieldName,
+					trust.INVEST_FIELD investField, 
+					(SELECT CODE_NAME FROM directionary_code_item c2 WHERE c2.ID=trust.INTEREST) AS interestName,
+					trust.INTEREST inverestCode, 
+					(SELECT CODE_NAME FROM directionary_code_item c3 WHERE c3.ID=trust.MATCHING) AS matchingName,
+					trust.MATCHING matchCode, <!--  add by aiyan 20160121 -->
+					trust.RAISE_REMARK raiseRemark,	
+					main.BANK_NAME bankName,
+					trust.PRODUCT_ID productId,	
+					c.REGISTER_MONEY registerMoney,	
+					c.MONEY_SIZE moneySize,
+					c.LOGO  AS companyLogo,
+					c.ID as companyId,
+					c.SHORT_NAME  AS companyName,
+					main.BUSINESS_ID businessId,	
+					main.FLOAT_INCOME floatIncome,
+					main.STATUS, 
+					main.PUB_FLAG pubFlag	,
+					CASE main.STATUS WHEN 1 THEN '预热' WHEN 2 THEN '在售' ELSE '售罄' END AS  statusName,
+					main.PRODUCT_NAME productName
+					FROM  bbu_product_common main  LEFT JOIN bbu_product_trust trust ON main.ID=trust.PRODUCT_ID
+					LEFT JOIN bbu_company c ON c.id = COMPANY_ID
+				WHERE main.PUB_FLAG = 1 ) t
+		    WHERE t.pubFlag=1 and t.id &gt; #{id}
+		    <if test="businessId != null and businessId != '' or businessId == 0">  
+	        	and t.businessId = #{businessId}  
+	        </if>
+	        <if test="companyIdXt != null and companyIdXt != '' or companyIdXt == 0">  
+	        		and t.companyId = #{companyIdXt}
+	        </if>
+	        <if test="companyIdZg != null and companyIdZg != '' or companyIdZg == 0">  
+	        		and t.companyId = #{companyIdZg}
+	        </if>
+	        <if test="keyWords != null and keyWords != '' or keyWords == 0">  
+	        	and (t.productName like '%${keyWords}%' or t.companyName like '%${keyWords}%')
+	        </if>
+	        <if test="investField != null and investField != '' or investField == 0">  
+	        	<!-- and t.investFieldName like '%${investField}%' -->
+	        	and t.investField=#{investField}
+	        </if>
+	        <if test="inverestCode != null and inverestCode != '' or inverestCode == 0">  
+	         	and t.inverestCode=#{inverestCode}
+	        </if>
+	        <if test="matchCode != null and matchCode != '' or matchCode == 0">  
+				and matchCode = #{matchCode}
+	        </if>
+			limit #{pageNum}
+	</select>
+	
+	<select id="getProductDetail" parameterType="java.lang.Integer" resultType="java.util.Map">
+		SELECT  
+				IFNULL(main.RAISE_RATE, 0 ) AS finishRate,
+				main.ACCOUNT account,	
+				main.ACCOUNT_PERSON accountPerson,
+				main.FLOAT_INCOME floatIncome,
+				(SELECT c.NAME FROM central_control_user c WHERE c.ID=main.BACK_USER_ID) AS backUserName,
+				main.BANK_NAME bankName,
+				main.BUSINESS_ID businessId,	
+				main.COMPANY_ID companyId,
+				(SELECT SHORT_NAME FROM bbu_company c WHERE c.ID=main.COMPANY_ID ) AS companyName,
+				(SELECT LOGO FROM bbu_company c WHERE c.ID=main.COMPANY_ID ) AS companyLogo,
+				main.FLOAT_INCOME floatIncome,
+				trust.FUND_PURPOSE fundPurpose,
+				main.id id,
+				trust.INTEREST interest,
+				(SELECT CODE_NAME FROM directionary_code_item ci WHERE ci.ID=trust.INTEREST) AS interestName,	
+				trust.INVEST_FIELD investField,	
+				(SELECT CODE_NAME FROM directionary_code_item ci WHERE ci.ID=trust.INVEST_FIELD) AS investFieldName,
+				trust.INVEST_TERM investTerm,
+				trust.INVEST_TERM_Days investTermDays,
+				trust.MATCHING matching,	
+				(SELECT CODE_NAME FROM directionary_code_item ci WHERE ci.ID=trust.MATCHING) AS matchingName,
+				trust.PRODUCT_ID productId,
+				main.PRODUCT_NAME productName,
+				trust.PROJECT_ADVANTAGE projectAdvantage,
+				trust.RAISE_REMARK raiseRemark,
+				trust.RETURN_SOURCE returnSource,
+				trust.RISK_MANAGE riskManage,
+				trust.SELL_SIZE sellSize,
+				main.STATUS STATUS,
+				main.PUB_FLAG pubFlag,	
+				CASE main.STATUS WHEN 1 THEN '预热' WHEN 2 THEN '在售' ELSE '售罄' END AS  statusName,
+				trust.SUBSCRIBE subscribe,	
+				trust.YEAR_INCOME yearIncome
+				FROM  bbu_product_common main  LEFT JOIN bbu_product_trust trust ON main.ID=trust.PRODUCT_ID
+			WHERE main.PUB_FLAG = 1 and trust.PRODUCT_ID=#{id}	
+	</select>
+	
+</mapper>
+
+	

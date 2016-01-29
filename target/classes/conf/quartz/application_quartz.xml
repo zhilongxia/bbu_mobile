@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+
+	<bean id="weChatService" class="com.buybuyup.bbu.service.WeChatService"></bean>
+
+	<bean id="weChatServiceDetail"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<!-- 指定任务类 -->
+		<property name="targetObject" ref="weChatService" />
+		<!-- 指定任务执行的方法 -->
+		<property name="targetMethod" value="access_token_cache_db" />
+		<!-- 指定最终封装出的任务是否有状态  -->
+<!-- 		<property name="concurrent" value="false" />  -->
+	</bean>
+
+	<bean id="weChatServiceTrigger"
+		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="weChatServiceDetail" />
+		<!-- 每30分钟运行一次 -->
+		<property name="cronExpression" value="0 0/59 * * * ?" />
+	</bean>
+
+	<!-- 总管理类 如果将lazy-init='false'那么容器启动就会执行调度程序 -->
+	<bean id="startQuertz" lazy-init="false" autowire="no"
+		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref bean="weChatServiceTrigger" />
+			</list>
+		</property>
+	</bean>
+</beans>

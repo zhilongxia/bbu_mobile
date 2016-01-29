@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration>
+
+<configuration>
+
+	<!-- 需要过滤的接口列表 需要登录才可以用 -->
+	<not-filtrates>
+
+		<url>/userCenter/load</url>
+		<url>/userCenter/myOrderList</url>
+		<url>/userCenter/orderDetail</url>
+		<url>/userCenter/paymentInfo</url>
+		<url>/userCenter/refundInfo</url>
+		<url>/userCenter/mydeclarationInfo</url>
+
+		<url>/userCenter/mydeclarationlist</url>
+		<url>/userCenter/toProvideProject</url>
+		<url>/userCenter/myContractlist</url>
+		<url>/userCenter/contractDetail</url>
+		<url>/userCenter/myCustomerList</url>
+		
+		<url>/userCenter/userInfo</url>
+		<url>/userCenter/mycustomerdetail</url>
+		<url>/userCenter/myIntegralList</url>
+		<url>/integral/scoreConfirm</url>
+		<url>/integral/myIntegralOrderList</url>
+		<url>/integral/integralDetail</url>
+		<url>/integral/getAddressById</url>
+	</not-filtrates>
+
+	<notAjaxFiltrates>
+		<url>/userCenter/policyOrder</url>
+		<url>/userCenter/provideProject</url>
+		<url>/product/bookOrder</url>
+		<url>/integral/saveOrderScore</url>
+		<url>/integral/addAddress</url>
+		<url>/integral/editAddress</url>
+		<url>/integral/newAddress</url>
+	</notAjaxFiltrates>
+	
+	<apiNeedLoginFilter>
+		<url>/gateway/integralProductList</url>
+		<url>/gateway/integralOrderList</url>
+		<url>/gateway/integralDetail</url>
+		<url>/gateway/deliveryAddress</url>
+		<url>/gateway/saveOrderScore</url>
+		
+		<url>/gateway/getOrderAddress</url>
+		<url>/gateway/getDefaultAddress</url>
+		<url>/gateway/deleteAddress</url>
+		<url>/gateway/getUserInfo</url>
+		<url>/gateway/updateUserInfo</url>
+		
+		<url>/gateway/bookOrder</url>
+		<url>/gateway/provideProject</url>
+		<url>/gateway/myOrderList</url>
+		<url>/gateway/myOrderDetail</url>
+		<url>/gateway/fileUpload</url>
+		
+		<url>/gateway/policyOrder</url>
+		<url>/gateway/paymentInfo</url>
+		<url>/gateway/myDeclarationList</url>
+		<url>/gateway/myContractList</url>
+		<url>/gateway/myContractDetail</url>
+		
+		<url>/gateway/myCustomerList</url>
+		<url>/gateway/myCustomerDetail</url>
+		<url>/gateway/myCustomerOrderList</url>
+		<url>/gateway/orderHwbxBook</url>
+		<url>/gateway/bookHwbxDetail</url>
+		
+		<url>/gateway/Order_BenefitsList</url>
+		<url>/gateway/Order_Benefit_add</url>
+		<url>/gateway/Order_Benefit_update</url>
+		<url>/gateway/Order_Benefit_delete</url>
+		<url>/gateway/recognizerInfoCmd</url>
+		
+		<url>/gateway/recognizeeInfoCmd</url>
+		<url>/gateway/Order_Recognizee_save</url>
+		<url>/gateway/Order_Recognizer_save</url>
+		<url>/gateway/Order_InfoDetail</url>
+		<url>/gateway/order_info_save</url>
+	</apiNeedLoginFilter>
+	
+	
+	<host_config>http://192.168.80.11:9090/</host_config>
+	
+	<wechatToken>bbuwexin</wechatToken>
+	<weChatCallBack>http://test.7mymy.com/bbu_app/login/weChatCallback</weChatCallBack>
+	<qrconnect>https://open.weixin.qq.com/connect/oauth2/authorize</qrconnect>
+	<weChatSecret>d11a57c3f3ea9b9bbe3523aa6223e07a</weChatSecret>
+	<weChatAppId>wxb831577aab9fbd07</weChatAppId>
+	<weChatApiUrl>https://api.weixin.qq.com/sns/oauth2/access_token</weChatApiUrl>
+	
+	<smsSendUrl>http://www.mxtong.net.cn/GateWay/Services.asmx/DirectSend</smsSendUrl>
+	<smsUid>969338</smsUid>
+	<smsPwd>yuan422498</smsPwd>
+	<smsSignature>【买买提客服中心】</smsSignature>
+	
+	<local-method><path>/AppDirectory/bbu_files</path></local-method>
+	
+</configuration>

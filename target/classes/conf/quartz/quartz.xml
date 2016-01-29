@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+
+	<description>Quartz的定时集群任务配置</description>
+
+	<bean id="quartzDataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+		<property name="driverClass" value="${jdbc.driverClassName}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+	</bean> 
+
+	<!-- Quartz集群Scheduler -->
+	<bean id="clusterQuartzScheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<!-- Triggers集成 -->
+		<property name="triggers">
+			<list>
+				<ref bean="timerTrigger" />
+			</list>
+		</property>
+		<!-- quartz配置文件路径 -->
+		<property name="configLocation" value="classpath:properties/quartz.properties" />
+		<!-- 启动时延期3秒开始任务 -->
+		<property name="startupDelay" value="3" />
+		<!-- 保存Job数据到数据库所需的数据源 -->
+		<property name="dataSource" ref="quartzDataSource" />
+		<!-- Job接受applicationContext的成员变量名 -->
+		<property name="applicationContextSchedulerContextKey" value="applicationContext" />
+	</bean>
+
+	<!-- Timer式 Trigger定义 -->
+	<bean id="timerTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
+		<property name="jobDetail" ref="timerJobDetail" />
+		<property name="repeatInterval" value="120000" />
+	</bean>
+
+	<!-- Timer JobDetail, 基于JobDetailBean实例化Job Class,可持久化到数据库实现集群 -->
+	<bean id="timerJobDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass" value="com.buybuyup.quartz.QuartzClusterableJob" />
+	</bean>
+</beans>
