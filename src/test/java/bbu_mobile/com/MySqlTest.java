@@ -21,11 +21,11 @@ public class MySqlTest {
 
 			Statement statement = conn.createStatement();
 			// 查询数据
-			ResultSet rs = statement.executeQuery("select * from person");
+			ResultSet rs = statement.executeQuery("select * from product_main");
 
 			// 输出结果集（类似.net中的DataSet/DataTable）
 			while (rs.next()) {
-				System.out.println("id=" + rs.getInt("Id") + ",name=" + rs.getString("Name"));
+				System.out.println("id=" + rs.getInt("id") + ",name=" + rs.getString("seNo"));
 			}
 			rs.close();
 
