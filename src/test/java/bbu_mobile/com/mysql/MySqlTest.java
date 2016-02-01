@@ -1,4 +1,4 @@
-package bbu_mobile.com;
+package bbu_mobile.com.mysql;
 
 import java.sql.DriverManager;
 import java.sql.ResultSet;

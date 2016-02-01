@@ -1,4 +1,4 @@
-package bbu_mobile.com.cache;
+package bbu_mobile.com.redis;
 
 import java.io.FileNotFoundException;
 
@@ -17,8 +17,8 @@ import org.springframework.util.Log4jConfigurer;
  */
 @SuppressWarnings({ "rawtypes", "unchecked" })
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:conf/redis/spring-jedis.xml")
-public class SpringJedisDemo {
+@ContextConfiguration("classpath:conf/redis/spring-redis.xml")
+public class RedisTest {
 
 	static {
 		try {
