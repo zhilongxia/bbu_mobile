@@ -1,4 +1,4 @@
-package bbu_mobile.com.netty;
+package bbu_mobile.com.netty.tcp;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
@@ -25,7 +25,7 @@ public class NettyServer {
 			b.channel(NioServerSocketChannel.class);
 			b.childHandler(new ChildChannelHandler());
 
-			System.out.println("·þÎñ¶Ë¿ªÆôµÈ´ý¿Í»§¶ËÁ¬½Ó ... ...");
+			System.out.println("ï¿½ï¿½ï¿½ï¿½Ë¿ï¿½ï¿½ï¿½ï¿½È´ï¿½ï¿½Í»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ... ...");
 
 			Channel ch = b.bind(7397).sync().channel();
 

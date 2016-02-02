@@ -1,4 +1,4 @@
-package bbu_mobile.com.netty;
+package bbu_mobile.com.netty.tcp;
 
 import java.util.Date;
 import java.util.logging.Level;
@@ -34,20 +34,20 @@ public class MyWebSocketServerHandler extends SimpleChannelInboundHandler<Object
 	@Override
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
 
-		// Ìí¼Ó
+		// ï¿½ï¿½ï¿½
 		Global.group.add(ctx.channel());
 
-		System.out.println("¿Í»§¶ËÓë·þÎñ¶ËÁ¬½Ó¿ªÆô");
+		System.out.println("ï¿½Í»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¿ï¿½ï¿½ï¿½");
 
 	}
 
 	@Override
 	public void channelInactive(ChannelHandlerContext ctx) throws Exception {
 
-		// ÒÆ³ý
+		// ï¿½Æ³ï¿½
 		Global.group.remove(ctx.channel());
 
-		System.out.println("¿Í»§¶ËÓë·þÎñ¶ËÁ¬½Ó¹Ø±Õ");
+		System.out.println("ï¿½Í»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¹Ø±ï¿½");
 
 	}
 
@@ -73,41 +73,41 @@ public class MyWebSocketServerHandler extends SimpleChannelInboundHandler<Object
 
 	private void handlerWebSocketFrame(ChannelHandlerContext ctx, WebSocketFrame frame) {
 
-		// ÅÐ¶ÏÊÇ·ñ¹Ø±ÕÁ´Â·µÄÖ¸Áî
+		// ï¿½Ð¶ï¿½ï¿½Ç·ï¿½Ø±ï¿½ï¿½ï¿½Â·ï¿½ï¿½Ö¸ï¿½ï¿½
 		if (frame instanceof CloseWebSocketFrame) {
 			handshaker.close(ctx.channel(), (CloseWebSocketFrame) frame.retain());
 		}
 
-		// ÅÐ¶ÏÊÇ·ñpingÏûÏ¢
+		// ï¿½Ð¶ï¿½ï¿½Ç·ï¿½pingï¿½ï¿½Ï¢
 		if (frame instanceof PingWebSocketFrame) {
 			ctx.channel().write(new PongWebSocketFrame(frame.content().retain()));
 			return;
 		}
 
-		// ±¾Àý³Ì½öÖ§³ÖÎÄ±¾ÏûÏ¢£¬²»Ö§³Ö¶þ½øÖÆÏûÏ¢
+		// ï¿½ï¿½ï¿½ï¿½ï¿½Ì½ï¿½Ö§ï¿½ï¿½ï¿½Ä±ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½Ö§ï¿½Ö¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
 		if (!(frame instanceof TextWebSocketFrame)) {
 
-			System.out.println("±¾Àý³Ì½öÖ§³ÖÎÄ±¾ÏûÏ¢£¬²»Ö§³Ö¶þ½øÖÆÏûÏ¢");
+			System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½Ì½ï¿½Ö§ï¿½ï¿½ï¿½Ä±ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½Ö§ï¿½Ö¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢");
 
 			throw new UnsupportedOperationException(
 					String.format("%s frame types not supported", frame.getClass().getName()));
 		}
 
-		// ·µ»ØÓ¦´ðÏûÏ¢
+		// ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½Ï¢
 		String request = ((TextWebSocketFrame) frame).text();
 
-		System.out.println("·þÎñ¶ËÊÕµ½£º" + request);
+		System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õµï¿½ï¿½ï¿½" + request);
 
 		if (logger.isLoggable(Level.FINE)) {
 			logger.fine(String.format("%s received %s", ctx.channel(), request));
 		}
 
-		TextWebSocketFrame tws = new TextWebSocketFrame(new Date().toString() + ctx.channel().id() + "£º" + request);
+		TextWebSocketFrame tws = new TextWebSocketFrame(new Date().toString() + ctx.channel().id() + "ï¿½ï¿½" + request);
 
-		// Èº·¢
+		// Èºï¿½ï¿½
 		Global.group.writeAndFlush(tws);
 
-		// ·µ»Ø¡¾Ë­·¢µÄ·¢¸øË­¡¿
+		// ï¿½ï¿½ï¿½Ø¡ï¿½Ë­ï¿½ï¿½ï¿½Ä·ï¿½ï¿½ï¿½Ë­ï¿½ï¿½
 		// ctx.channel().writeAndFlush(tws);
 
 	}
@@ -137,14 +137,14 @@ public class MyWebSocketServerHandler extends SimpleChannelInboundHandler<Object
 
 	private static void sendHttpResponse(ChannelHandlerContext ctx, FullHttpRequest req, DefaultFullHttpResponse res) {
 
-		// ·µ»ØÓ¦´ð¸ø¿Í»§¶Ë
+		// ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½Í»ï¿½ï¿½ï¿½
 		if (res.getStatus().code() != 200) {
 			ByteBuf buf = Unpooled.copiedBuffer(res.getStatus().toString(), CharsetUtil.UTF_8);
 			res.content().writeBytes(buf);
 			buf.release();
 		}
 
-		// Èç¹ûÊÇ·ÇKeep-Alive£¬¹Ø±ÕÁ¬½Ó
+		// ï¿½ï¿½ï¿½ï¿½Ç·ï¿½Keep-Aliveï¿½ï¿½ï¿½Ø±ï¿½ï¿½ï¿½ï¿½ï¿½
 		ChannelFuture f = ctx.channel().writeAndFlush(res);
 		if (!isKeepAlive(req) || res.getStatus().code() != 200) {
 			f.addListener(ChannelFutureListener.CLOSE);

@@ -1,4 +1,4 @@
-package bbu_mobile.com.netty;
+package bbu_mobile.com.netty.tcp;
 
 import static org.jboss.netty.buffer.ChannelBuffers.dynamicBuffer;
 

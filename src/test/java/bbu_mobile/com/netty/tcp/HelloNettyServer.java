@@ -1,4 +1,4 @@
-package bbu_mobile.com.netty;
+package bbu_mobile.com.netty.tcp;
 
 import java.net.InetSocketAddress;
 import java.util.concurrent.Executors;
@@ -29,7 +29,6 @@ public class HelloNettyServer {
 		});
 		// 开放8000端口供客户端访问。
 		bootstrap.bind(new InetSocketAddress(8000));
-
 	}
 
 	/**
